@@ -9,6 +9,8 @@ import { FACILITIES, OFFER_TYPES, USER_TYPES } from '../types.js';
 import type { RemoteOffer } from './remote-offer.js';
 import { getRandomBoolean, getRandomFloat, getRandomInt, getRandomItem, getRandomSubset } from '../random.js';
 
+const MS_IN_DAY = 24 * 60 * 60 * 1000;
+
 function mapRandomUser() {
   const names = ['Alex', 'Sam', 'Taylor', 'Chris', 'Jordan', 'Pat', 'Morgan'];
   const name = getRandomItem(names);
@@ -19,7 +21,7 @@ function mapRandomUser() {
     authorEmail: email,
     authorAvatarUrl: `avatar-${name.toLowerCase()}.jpg`,
     authorPassword: `pass${getRandomInt(1000, 9999)}`,
-    authorType: getRandomItem(USER_TYPES) as (typeof USER_TYPES)[number],
+    authorType: getRandomItem(USER_TYPES),
   } as const;
 }
 
@@ -43,7 +45,7 @@ function createOfferRow(base: RemoteOffer): OfferTSVRow {
 
   const now = new Date();
   const shiftDays = getRandomInt(-30, 0);
-  const postDate = new Date(now.getTime() + shiftDays * 24 * 60 * 60 * 1000);
+  const postDate = new Date(now.getTime() + shiftDays * MS_IN_DAY);
 
   return {
     title: base.title,
