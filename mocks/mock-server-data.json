@@ -1,0 +1,150 @@
+{
+  "offers": [
+    {
+      "title": "Stylish apartment in city center",
+      "description": "Modern stylish apartment in the very heart of the city, close to main attractions and restaurants.",
+      "city": "Amsterdam",
+      "previewImage": "img/apartment-01.jpg",
+      "images": [
+        "img/01.jpg",
+        "img/02.jpg",
+        "img/03.jpg",
+        "img/04.jpg",
+        "img/05.jpg",
+        "img/06.jpg"
+      ],
+      "isPremium": true,
+      "type": "apartment",
+      "bedrooms": 2,
+      "maxAdults": 4,
+      "price": 180,
+      "rating": 4.8,
+      "goods": [
+        "Breakfast",
+        "Air conditioning",
+        "Washer",
+        "Towels"
+      ],
+      "location": {
+        "latitude": 52.370216,
+        "longitude": 4.895168
+      }
+    },
+    {
+      "title": "Cozy room near park",
+      "description": "Small but cozy room next to a green park, perfect for a short stay.",
+      "city": "Paris",
+      "previewImage": "img/room-01.jpg",
+      "images": [
+        "img/r01.jpg",
+        "img/r02.jpg",
+        "img/r03.jpg",
+        "img/r04.jpg",
+        "img/r05.jpg",
+        "img/r06.jpg"
+      ],
+      "isPremium": false,
+      "type": "room",
+      "bedrooms": 1,
+      "maxAdults": 2,
+      "price": 90,
+      "rating": 4.1,
+      "goods": [
+        "Towels",
+        "Fridge"
+      ],
+      "location": {
+        "latitude": 48.85661,
+        "longitude": 2.351499
+      }
+    },
+    {
+      "title": "Family house with garden",
+      "description": "Spacious family house with private garden and parking space.",
+      "city": "Hamburg",
+      "previewImage": "img/house-01.jpg",
+      "images": [
+        "img/h01.jpg",
+        "img/h02.jpg",
+        "img/h03.jpg",
+        "img/h04.jpg",
+        "img/h05.jpg",
+        "img/h06.jpg"
+      ],
+      "isPremium": false,
+      "type": "house",
+      "bedrooms": 3,
+      "maxAdults": 6,
+      "price": 220,
+      "rating": 4.5,
+      "goods": [
+        "Baby seat",
+        "Washer",
+        "Fridge"
+      ],
+      "location": {
+        "latitude": 53.550341,
+        "longitude": 10.000654
+      }
+    },
+    {
+      "title": "Business hotel near station",
+      "description": "Comfortable business hotel right next to the central station, ideal for short business trips.",
+      "city": "Cologne",
+      "previewImage": "img/hotel-01.jpg",
+      "images": [
+        "img/bh01.jpg",
+        "img/bh02.jpg",
+        "img/bh03.jpg",
+        "img/bh04.jpg",
+        "img/bh05.jpg",
+        "img/bh06.jpg"
+      ],
+      "isPremium": false,
+      "type": "hotel",
+      "bedrooms": 1,
+      "maxAdults": 2,
+      "price": 130,
+      "rating": 4.3,
+      "goods": [
+        "Breakfast",
+        "Laptop friendly workspace",
+        "Towels"
+      ],
+      "location": {
+        "latitude": 50.938361,
+        "longitude": 6.959974
+      }
+    },
+    {
+      "title": "Canal view studio",
+      "description": "Bright studio with a view on the canal, perfect for couples.",
+      "city": "Amsterdam",
+      "previewImage": "img/studio-01.jpg",
+      "images": [
+        "img/s01.jpg",
+        "img/s02.jpg",
+        "img/s03.jpg",
+        "img/s04.jpg",
+        "img/s05.jpg",
+        "img/s06.jpg"
+      ],
+      "isPremium": true,
+      "type": "apartment",
+      "bedrooms": 1,
+      "maxAdults": 2,
+      "price": 200,
+      "rating": 4.9,
+      "goods": [
+        "Air conditioning",
+        "Laptop friendly workspace",
+        "Fridge"
+      ],
+      "location": {
+        "latitude": 52.370216,
+        "longitude": 4.895168
+      }
+    }
+  ]
+}
+
