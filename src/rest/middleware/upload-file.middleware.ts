@@ -26,8 +26,8 @@ export class UploadFileMiddleware implements MiddlewareInterface {
       storage: diskStorage({
         destination: absoluteDir,
         filename: (_req, file, cb) => {
-          const ext = extension(file.mimetype) || 'bin';
-          cb(null, `${nanoid()}.${ext}`);
+          const fileExtension = extension(file.mimetype) || 'bin';
+          cb(null, `${nanoid()}.${fileExtension}`);
         },
       }),
       fileFilter: (_req, file, cb) => {

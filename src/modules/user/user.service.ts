@@ -33,14 +33,6 @@ export class UserService implements UserServiceInterface {
     return this.userModel.findOne({ email }).exec();
   }
 
-  public async findOrCreate(dto: CreateUserDto): Promise<UserDocument> {
-    const existing = await this.findByEmail(dto.email);
-    if (existing) {
-      return existing;
-    }
-    return this.create(dto);
-  }
-
   public async exists(documentId: string): Promise<boolean> {
     const result = await this.userModel.exists({ _id: documentId });
     return result !== null;

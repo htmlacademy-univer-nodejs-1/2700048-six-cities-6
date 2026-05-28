@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import type { CityName, Facility, OfferType } from '../../types.js';
 import { CITY_NAMES, FACILITIES, OFFER_TYPES } from '../../types.js';
 
+const DEFAULT_OFFER_RATING = 1;
+
 export interface OfferDocument extends mongoose.Document {
   title: string;
   description: string;
@@ -25,7 +27,7 @@ export interface OfferDocument extends mongoose.Document {
   updatedAt: Date;
 }
 
-const offerSchema = new mongoose.Schema(
+const OFFER_SCHEMA = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -63,7 +65,9 @@ const offerSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
-      default: 0,
+      default: DEFAULT_OFFER_RATING,
+      min: 1,
+      max: 5,
     },
     type: {
       type: String,
@@ -114,4 +118,4 @@ const offerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const OfferModel = mongoose.model<OfferDocument>('Offer', offerSchema);
+export const OfferModel = mongoose.model<OfferDocument>('Offer', OFFER_SCHEMA);

@@ -13,6 +13,7 @@ import type { UserServiceInterface } from '../user/user-service.interface.js';
 
 const DEFAULT_OFFER_LIMIT = 60;
 const PREMIUM_OFFER_LIMIT = 3;
+const DEFAULT_OFFER_RATING = 1;
 
 @injectable()
 export class OfferService implements OfferServiceInterface {
@@ -131,7 +132,7 @@ export class OfferService implements OfferServiceInterface {
     const commentCount = aggregation?.count ?? 0;
     const rating = aggregation
       ? Math.round(aggregation.avgRating * 10) / 10
-      : 0;
+      : DEFAULT_OFFER_RATING;
 
     await this.offerModel
       .findByIdAndUpdate(offerId, { commentCount, rating })
@@ -151,14 +152,14 @@ export class OfferService implements OfferServiceInterface {
 
   private async enrichMany(offers: OfferDocument[], currentUserId?: string): Promise<OfferEntity[]> {
     const favorites = currentUserId ? await this.userService.findFavorites(currentUserId) : [];
-    const favSet = new Set(favorites);
-    return offers.map((offer) => this.attachFavorite(offer, favSet));
+    const favoriteIds = new Set(favorites);
+    return offers.map((offer) => this.attachFavorite(offer, favoriteIds));
   }
 
-  private attachFavorite(offer: OfferDocument, favSet: Set<string>): OfferEntity {
+  private attachFavorite(offer: OfferDocument, favoriteIds: Set<string>): OfferEntity {
     return {
       ...offer.toObject(),
-      isFavorite: favSet.has(offer.id),
+      isFavorite: favoriteIds.has(offer.id),
     } as OfferEntity;
   }
 }

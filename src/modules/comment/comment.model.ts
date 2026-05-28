@@ -10,7 +10,7 @@ export interface CommentDocument extends mongoose.Document {
   updatedAt: Date;
 }
 
-const commentSchema = new mongoose.Schema(
+const COMMENT_SCHEMA = new mongoose.Schema(
   {
     text: {
       type: String,
@@ -43,4 +43,4 @@ const commentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const CommentModel = mongoose.model<CommentDocument>('Comment', commentSchema);
+export const CommentModel = mongoose.model<CommentDocument>('Comment', COMMENT_SCHEMA);

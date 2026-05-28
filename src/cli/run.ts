@@ -21,16 +21,15 @@ export async function runCli(argv: string[] = process.argv): Promise<void> {
   const importIndex = args.indexOf('--import');
   if (importIndex !== -1) {
     const filePath = args[importIndex + 1];
-    const dbUri = args[importIndex + 2];
-    if (!filePath || !dbUri) {
+    if (!filePath) {
       // eslint-disable-next-line no-console
-      console.error(chalk.red('Некорректные аргументы для --import. Ожидается: --import <filepath> <db_uri>.'));
+      console.error(chalk.red('Некорректные аргументы для --import. Ожидается: --import <filepath>.'));
       printHelp();
       process.exitCode = 1;
       return;
     }
 
-    await importFromTSV(filePath, dbUri);
+    await importFromTSV(filePath);
     return;
   }
 

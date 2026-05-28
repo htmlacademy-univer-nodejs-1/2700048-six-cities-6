@@ -8,7 +8,7 @@ import type { RestConfig } from './rest.config.js';
 
 convict.addFormats(addFormats);
 
-const configSchema: Schema<RestConfig> = {
+const CONFIG_SCHEMA: Schema<RestConfig> = {
   port: {
     doc: 'Application port',
     format: 'port',
@@ -50,7 +50,7 @@ const configSchema: Schema<RestConfig> = {
     doc: 'Password hash salt',
     format: String,
     env: 'SALT',
-    default: 'salt',
+    default: '',
     sensitive: true,
   },
   uploadDirectory: {
@@ -63,7 +63,7 @@ const configSchema: Schema<RestConfig> = {
     doc: 'Secret key used to sign JWT access tokens',
     format: String,
     env: 'JWT_SECRET',
-    default: 'change-me',
+    default: '',
     sensitive: true,
   },
   jwtExpiresIn: {
@@ -84,7 +84,7 @@ const REQUIRED_ENVIRONMENT_VARIABLES = [
 
 @injectable()
 export class ConfigService implements ConfigInterface<RestConfig> {
-  private readonly config = convict<RestConfig>(configSchema);
+  private readonly config = convict<RestConfig>(CONFIG_SCHEMA);
 
   constructor() {
     dotenv.config({quiet: true});

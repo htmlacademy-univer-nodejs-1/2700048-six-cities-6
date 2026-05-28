@@ -5,7 +5,6 @@ export interface UserServiceInterface {
   create(dto: CreateUserDto): Promise<UserDocument>;
   findById(id: string): Promise<UserDocument | null>;
   findByEmail(email: string): Promise<UserDocument | null>;
-  findOrCreate(dto: CreateUserDto): Promise<UserDocument>;
   exists(documentId: string): Promise<boolean>;
   verifyPassword(user: UserDocument, plainPassword: string): boolean;
   setAvatarPath(userId: string, avatarPath: string): Promise<UserDocument | null>;

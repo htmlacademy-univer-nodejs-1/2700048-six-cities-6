@@ -9,7 +9,7 @@ export function printHelp(): void {
     chalk.bold('Команды:'),
     ` ${chalk.cyan('--version')}:                 ${chalk.dim('# выводит номер версии')}`,
     ` ${chalk.cyan('--help')}:                    ${chalk.dim('# печатает этот текст')}`,
-    ` ${chalk.cyan('--import <path> <db_uri>')}:  ${chalk.dim('# импортирует данные из TSV в MongoDB')}`,
+    ` ${chalk.cyan('--import <path>')}:           ${chalk.dim('# импортирует данные из TSV в MongoDB')}`,
     ` ${chalk.cyan('--generate <n> <path> <url>')}: ${chalk.dim('# генерирует произвольное количество тестовых данных')}`,
   ].join('\n');
 

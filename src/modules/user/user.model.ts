@@ -14,7 +14,7 @@ export interface UserDocument extends mongoose.Document {
   updatedAt: Date;
 }
 
-const userSchema = new mongoose.Schema(
+const USER_SCHEMA = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -49,4 +49,4 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const UserModel = mongoose.model<UserDocument>('User', userSchema);
+export const UserModel = mongoose.model<UserDocument>('User', USER_SCHEMA);

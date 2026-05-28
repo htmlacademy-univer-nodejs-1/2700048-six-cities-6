@@ -3,34 +3,71 @@ import { createInterface } from 'node:readline';
 import { resolve } from 'node:path';
 import mongoose from 'mongoose';
 import chalk from 'chalk';
+import dotenv from 'dotenv';
 
 import { parseOfferFromTSVLine } from './tsv.js';
+import { getMongoURI } from '../db/db-uri.helper.js';
 import { UserModel } from '../modules/user/user.model.js';
 import { OfferModel } from '../modules/offer/offer.model.js';
 import { hashPassword } from '../modules/user/password.helper.js';
 
-const IMPORT_SALT = process.env.SALT ?? 'salt';
+const REQUIRED_IMPORT_ENVIRONMENT_VARIABLES = [
+  'DB_HOST',
+  'DB_PORT',
+  'DB_NAME',
+  'SALT',
+] as const;
 
-export async function importFromTSV(filePath: string, dbUri: string): Promise<void> {
+function getRequiredEnvironmentVariable(name: typeof REQUIRED_IMPORT_ENVIRONMENT_VARIABLES[number]): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+}
+
+function getImportDatabaseUri(): string {
+  const databasePort = Number.parseInt(getRequiredEnvironmentVariable('DB_PORT'), 10);
+  if (!Number.isFinite(databasePort)) {
+    throw new Error('Environment variable DB_PORT must be a valid port number.');
+  }
+
+  return getMongoURI(
+    getRequiredEnvironmentVariable('DB_HOST'),
+    databasePort,
+    getRequiredEnvironmentVariable('DB_NAME'),
+    process.env.DB_USER,
+    process.env.DB_PASSWORD
+  );
+}
+
+export async function importFromTSV(filePath: string): Promise<void> {
+  dotenv.config({ quiet: true });
+
   const absolutePath = resolve(process.cwd(), filePath);
-
-  // eslint-disable-next-line no-console
-  console.log(chalk.bold(`Подключение к базе данных: ${chalk.underline(dbUri)}`));
-  await mongoose.connect(dbUri);
-  // eslint-disable-next-line no-console
-  console.log(chalk.green('Соединение с MongoDB установлено.'));
-
-  const stream = createReadStream(absolutePath, { encoding: 'utf-8' });
-  const rl = createInterface({ input: stream, crlfDelay: Infinity });
 
   let importedCount = 0;
   let lineNumber = 0;
 
-  // eslint-disable-next-line no-console
-  console.log(chalk.bold(`Импорт из файла: ${chalk.underline(absolutePath)}`));
-
   try {
-    for await (const line of rl) {
+    const databaseUri = getImportDatabaseUri();
+    const databaseHost = getRequiredEnvironmentVariable('DB_HOST');
+    const databaseName = getRequiredEnvironmentVariable('DB_NAME');
+    const importSalt = getRequiredEnvironmentVariable('SALT');
+
+    // eslint-disable-next-line no-console
+    console.log(chalk.bold(`Подключение к базе данных: ${chalk.underline(databaseHost)}/${databaseName}`));
+    await mongoose.connect(databaseUri);
+    // eslint-disable-next-line no-console
+    console.log(chalk.green('Соединение с MongoDB установлено.'));
+
+    const stream = createReadStream(absolutePath, { encoding: 'utf-8' });
+    const lineReader = createInterface({ input: stream, crlfDelay: Infinity });
+
+    // eslint-disable-next-line no-console
+    console.log(chalk.bold(`Импорт из файла: ${chalk.underline(absolutePath)}`));
+
+    for await (const line of lineReader) {
       lineNumber += 1;
       const trimmed = line.trim();
       if (!trimmed) {
@@ -46,7 +83,7 @@ export async function importFromTSV(filePath: string, dbUri: string): Promise<vo
             name: parsed.host.name,
             email: parsed.host.email,
             avatarUrl: parsed.host.avatarUrl,
-            password: hashPassword(parsed.authorPassword, IMPORT_SALT),
+            password: hashPassword(parsed.authorPassword, importSalt),
             type: parsed.host.type,
           },
         },
